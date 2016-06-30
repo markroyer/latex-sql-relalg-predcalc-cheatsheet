@@ -8,7 +8,7 @@ intersection, and difference.
 
 ## Setup
 
-Make sure that you have the following Debian `texlive` package installed.
+Make sure that you have the Debian `texlive` package installed.
 
 ## Usage
 
