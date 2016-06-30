@@ -1,0 +1,162 @@
+\documentclass[landscape]{article}
+\usepackage[paperheight=8.5in,paperwidth=11.0in,margin=0.25in,landscape]{geometry}
+\usepackage{graphicx}
+\usepackage{textpos}
+\usepackage{pdflscape}
+\usepackage{listings}
+\usepackage{tabularx}
+\usepackage{array}
+
+\usepackage{textcomp}
+
+\pagenumbering{gobble}
+
+% Relational algebra symbols are originally from
+% ftp://reports.stanford.edu/www/dbgroup_only/latex-macros.html The
+% link seems to be broken now?
+\newcommand{\select}{\mbox{\Large$\sigma$}}
+\newcommand{\cross}{\times}
+\newcommand{\intersect}{\cap}
+\newcommand{\union}{\cup}
+\newcommand{\join}{\mbox{$\Join$}}
+\newcommand{\leftsemijoin}{\mbox{$\mathrel{\raise1pt\hbox{\vrule height5pt
+depth0pt width0.6pt\hskip-1.5pt$>$\hskip -2.5pt$<$}}$}}
+\newcommand{\rightsemijoin}{\mbox{$\mathrel{\raise1pt\hbox{\hskip-1.5pt$>$\hskip -2.5pt$<$\hskip -1.1pt\vrule height5pt
+depth0pt width0.6pt}}$}}
+\newcommand{\project}{\mbox{\Large$\pi$}}
+\newcommand{\aggregatefn}{\mbox{\Large$G$}}
+
+
+\lstset{
+  language=SQL,
+  mathescape,
+  basicstyle=\ttfamily, 
+  columns=fullflexible, 
+  upquote,
+  morekeywords={data,wrapper,library,language}
+}
+
+
+\begin{document}
+
+
+\newcommand{\tempwidth}{5.5cm}
+
+\bgroup
+\def\arraystretch{2.5}% Expand Vertical Spacing between rows 
+\noindent
+\begin{tabularx}{\textwidth}{|c|c|c|X|X|}
+
+\multicolumn{5}{c}{ \textbf{\Large Basic Database Queries}} \\
+
+
+\multicolumn{1}{r}{ \textbf{Assume}} & 
+\multicolumn{4}{l}{$R=\{(1,2,3), (4,5,6), (7,8,9)\}$, $S=\{(1,1,1), (2,2,2)\}$, and $T=\{(1,2,3), (4,5,6)\}$} \\
+
+\hline
+\multicolumn{1}{|c|}{Operation} &
+\multicolumn{1}{c|}{First-order Logic} &
+\multicolumn{1}{m{3cm}|}{\shortstack{Relational Algebra \\ (of Sets)}} &
+\multicolumn{1}{c|}{SQL} &
+\multicolumn{1}{c|}{Result} \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \hline \hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+Projection & $\{(x,y) \mid \exists z : (x,y,z) \in R \}$ & $\project_{x,y}R$ & 
+\multicolumn{1}{m{\tempwidth}|}{
+\begin{lstlisting}^^J
+SELECT DISTINCT x,y^^J
+FROM R^^J
+\end{lstlisting} }
+  & $\{(1,2), (4,5), (7,8)\}$ \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  Selection & $\{(x,y,z) \in R \mid x \leq 6 \}$ & $\select_{x\leq 6}R$ & 
+\multicolumn{1}{m{\tempwidth}|}{
+\begin{lstlisting}^^J
+SELECT DISTINCT x,y,z^^J
+FROM R^^J
+WHERE x <= 6^^J
+\end{lstlisting} }
+& $\{ (1,2,3), (4,5,6) \}$ \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+  Cross Product & $\{(x,y,z,a,b,c) \mid (x,y,z) \in R \wedge (a,b,c) \in S \}$ & $R \cross S$ & 
+\multicolumn{1}{m{\tempwidth}|}{
+\begin{lstlisting}^^J
+SELECT DISTINCT x,y,z,a,b,c^^J
+FROM R, S^^J
+\end{lstlisting} } &
+\multicolumn{1}{m{5cm}|}{ $\{(1,2,3,1,1,1), (1,2,3,2,2,2), (4,5,6,1,1,1),$ 
+$(4,5,6,2,2,2), (7,8,9,1,1,1), (7,8,9,2,2,2)\}$ }\\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Union & $\{(x,y,z) \mid (x,y,z) \in R \vee (x,y,z) \in S \}$ & $R \union S$ & 
+\multicolumn{1}{m{\tempwidth}|}{
+\begin{lstlisting}^^J
+SELECT * FROM R^^J
+UNION^^J
+SELECT * FROM S^^J
+\end{lstlisting} }
+& \multicolumn{1}{m{7cm}|}{$\{ (1,1,1), (1,2,3), (2,2,2),$ $(4,5,6), (7,8,9) \}$} \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Intersection & $\{(x,y,z) \mid (x,y,z) \in R \wedge (x,y,z)
+\in T \}$ & $R \intersect T$ &
+\multicolumn{1}{m{\tempwidth}|}{
+\begin{lstlisting}^^J
+SELECT * FROM R^^J
+INTERSECT^^J
+SELECT * FROM T^^J
+\end{lstlisting} }
+& $\{ (1,2,3), (4,5,6) \}$ \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+Difference & $\{(x,y,z) \mid (x,y,z) \in R \wedge (x,y,z) \not\in T \}$ & $R - T$ & 
+\multicolumn{1}{m{\tempwidth}|}{
+\begin{lstlisting}^^J
+SELECT * FROM R^^J
+EXCEPT^^J
+SELECT * FROM T^^J
+\end{lstlisting} }
+& $\{(7,8,9)\}$ \\
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+ \hline
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\end{tabularx}
+\egroup
+
+\subsubsection*{Other Notes:}
+
+The keyword \texttt{DISTINCT} is required in the SQL queries for
+projection, selection, and cross product in order to match the
+first-order logic and relational algebra queries.  Without the
+\texttt{DISTINCT} keyword in the \texttt{SELECT} clause, the SQL
+results are multisets (bags).  The reason multisets are are used,
+instead of sets by default, is to try to avoid any decrease in
+performance due to duplicate removal.
+
+
+\end{document}
+
+%%  LocalWords:  SQL multisets
