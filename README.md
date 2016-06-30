@@ -32,9 +32,9 @@ will remove all generated files.
 
 ## Generated PDF
 
-A link to the generated PDF will appear here.
-
-![Main method](https://raw.githubusercontent.com/wiki/markroyer/latex- "basicQueries.pdf")
+A pre-built version of the cheatsheet can be found
+[here](https://github.com/markroyer/latex-sql-relalg-predcalc-cheatsheet/wiki/basicQueries.pdf
+"basicQueries.pdf").
 
 ## License
 
@@ -43,5 +43,7 @@ The project is licensed under the terms of the
 
 
 
-<!-- LocalWords: sql relalg predcalc cheatsheet texlive pdf
-basicQueries -->
+<!-- LocalWords: sql relalg predcalc cheatsheet texlive pdf pre -->
+
+<!--  LocalWords:  basicQueries
+ -->
