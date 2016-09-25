@@ -6,6 +6,12 @@ stashed in a binder or hung on a wall for studying. The operators
 shown in the chart are projection, selection, cross product, union,
 intersection, and difference.
 
+## Generated PDF
+
+A pre-built version of the cheatsheet can be found
+[here](https://github.com/markroyer/latex-sql-relalg-predcalc-cheatsheet/wiki/basicQueries.pdf
+"basicQueries.pdf").
+
 ## Setup
 
 Make sure that you have the Debian `texlive` package installed.
@@ -29,12 +35,6 @@ make clean
 
 will remove all generated files.
 
-
-## Generated PDF
-
-A pre-built version of the cheatsheet can be found
-[here](https://github.com/markroyer/latex-sql-relalg-predcalc-cheatsheet/wiki/basicQueries.pdf
-"basicQueries.pdf").
 
 ## License
 
