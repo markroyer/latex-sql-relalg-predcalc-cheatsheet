@@ -1,4 +1,6 @@
-*~
 *.aux
 *.log
+*~
+auto/
+basicQueries.out
 basicQueries.pdf
