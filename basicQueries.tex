@@ -1,6 +1,7 @@
 \documentclass[landscape]{article}
 \usepackage[paperheight=8.5in,paperwidth=11.0in,margin=0.25in,landscape]{geometry}
 \usepackage{graphicx}
+\usepackage{hyperref}
 \usepackage{textpos}
 \usepackage{pdflscape}
 \usepackage{listings}
@@ -36,6 +37,16 @@ depth0pt width0.6pt}}$}}
   morekeywords={data,wrapper,library,language}
 }
 
+
+% Footnote without a marker suggested by Nelson Lago from
+% https://tex.stackexchange.com/questions/30720/footnote-without-a-marker
+\newcommand\extrafootertext[1]{%
+  \bgroup%
+  \renewcommand\thefootnote{\fnsymbol{footnote}}%
+  \renewcommand\thempfootnote{\fnsymbol{mpfootnote}}%
+  \footnotetext[0]{#1}%
+  \egroup%
+}
 
 \begin{document}
 
@@ -96,7 +107,7 @@ WHERE x <= 6^^J
 SELECT DISTINCT x,y,z,a,b,c^^J
 FROM R, S^^J
 \end{lstlisting} } &
-\multicolumn{1}{m{5cm}|}{ $\{(1,2,3,1,1,1), (1,2,3,2,2,2), (4,5,6,1,1,1),$ 
+\multicolumn{1}{m{7cm}|}{$\{(1,2,3,1,1,1), (1,2,3,2,2,2), (4,5,6,1,1,1),$ 
 $(4,5,6,2,2,2), (7,8,9,1,1,1), (7,8,9,2,2,2)\}$ }\\
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -155,6 +166,10 @@ first-order logic and relational algebra queries.  Without the
 results are multisets (bags).  The reason multisets are are used,
 instead of sets by default, is to try to avoid any decrease in
 performance due to duplicate removal.
+
+\extrafootertext{This document was
+  created by Mark Royer. You can find the source code at
+  \url{https://github.com/markroyer/latex-sql-relalg-predcalc-cheatsheet}.}
 
 
 \end{document}
